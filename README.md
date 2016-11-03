@@ -3,7 +3,7 @@ An React online contest application
 
 Flujo de Trabajo para la asignacion de boletos de rifa a usuarios que han reservado con la empresa.
 
-- [ ]El asesor de ventas debe realizar el registro de cada usuario que ha reservado previamente.
+- [ ] El asesor de ventas debe realizar el registro de cada usuario que ha reservado previamente.
 - [ ] El asesor de ventas puede ver la lista de usuarios registrados.
 - [ ] El asesor de ventas puede confirmar que los usuarios han realizado el pago de la reservacion.
 - [ ] El asesor de ventas puede asignar la cantidad de boletos que se le dara a la usuario que ya han pagado la reservacion
