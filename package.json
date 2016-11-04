@@ -1,0 +1,23 @@
+{
+  "name": "assign_tickets",
+  "version": "1.0.0",
+  "description": "An React online contest application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kondoSoft/online-contest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kondoSoft/online-contest/issues"
+  },
+  "homepage": "https://github.com/kondoSoft/online-contest#readme",
+  "devDependencies": {
+    "bulma": "^0.2.3",
+    "node-sass": "^3.11.1"
+  }
+}

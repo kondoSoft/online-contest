@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="src/css/style.css" media="screen" title="no title" charset="utf-8">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <title>Asignacion de Boletos</title>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="container nav-left ">
+        <a class="nav-item is-brand" href="#">
+          <figure class="image is-128x128">
+            <img src="src/images/logo.png" alt="logo">
+          </figure>
+        </a>
+        <div class="nav-center nav-item">
+          <a class="nav-item" href="#">
+            <h1 class="title is-1">Sistema de Asignación de Boletos</h1>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="section">
+      <p class=" "><a href="index.html">Home</a> > Lista de usuarios</p>
+    </div>
+    <div class="section level">
+      <div class="level-left">
+        <h1 class="subtitle is-3">Lista de Reservaciones</h1>
+      </div>
+      <div class="level-right" >
+        <p class="control "><input class="input" type="text" name="name" value="" size="50" placeholder="Buscar Participante"></p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns is-desktop ">
+          <div class="column box_table">
+            <table class="table is-striped">
+              <thead>
+                <tr>
+                  <th>Participante</th>
+                  <th>Reservacion</th>
+                  <th>Correo Electronico</th>
+                  <th>Pagado</th>
+                  <th>Boletos</th>
+                </tr>
+              </thead>
+              <tfoot>
+
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td><a href="">Misty Abbott</a></td>
+                  <td>Bass Guitar</td>
+                  <td>
+
+                  </td>
+                  <td>
+                    <p class="control has-addons has-addons-centered">
+                      <label class="checkbox">
+                        <input type="checkbox">
+                      </label>
+                    </p>
+                  </td>
+                  <td>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="">John Smith</a></td>
+                  <td>Rhythm Guitar</td>
+                  <td></td>
+                  <td>
+                    <p class="control has-addons has-addons-centered">
+                      <label class="checkbox">
+                        <input type="checkbox">
+
+                      </label>
+                    </p>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><a href="">Robert Mikels</a></td>
+                  <td>Lead Guitar</td>
+                  <td></td>
+                  <td>
+                    <p class="control has-addons has-addons-centered">
+                      <label class="checkbox">
+                        <input type="checkbox">
+
+                      </label>
+                    </p>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><a href="">Karyn Holmberg</a></td>
+                  <td>Drums</td>
+                  <td></td>
+                  <td>
+                    <p class="control has-addons has-addons-centered">
+                      <label class="checkbox">
+                        <input type="checkbox">
+                      </label>
+                    </p>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="pagination column is-half is-offset-one-quarter">
+              <a class="button">Previous</a>
+              <a class="button">Next page</a>
+              <ul>
+                <li>
+                  <a class="button">1</a>
+                </li>
+                <li>
+                  <span>...</span>
+                </li>
+                <li>
+                  <a class="button">45</a>
+                </li>
+                <li>
+                  <a class="button is-primary">46</a>
+                </li>
+                <li>
+                  <a class="button">47</a>
+                </li>
+                <li>
+                  <span>...</span>
+                </li>
+                <li>
+                  <a class="button">86</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+
+        </div>
+        <div class="column is-half is-offset-one-quarter has-text-centered">
+          <a class="button is-large is-primary">
+            <span class="icon is-large">
+              <i class="fa fa-print"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- modal Asignacion de Boletos para activar agregar clase is-active-->
+    <div class="modal " >
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Asignacion de Boletos</p>
+        </header>
+        <section class="modal-card-body">
+          <div class="content has-text-centered">
+            <h4 class="title is-5">Nombre de Usuario</h4>
+            <p class="subtitle is-6"><strong>Fulanito de Tal</strong></p><br>
+            <h4 class="title is-5">Numero de Reservacion</h4>
+            <p class="subtitle is-6"><strong>3614578</strong></p>
+            <h4>Cantidad</h4>
+            <input id="campo" name="Boletos" type="number" min="0" max="5"/>
+          </div>
+        </section>
+        <footer class="modal-card-foot ">
+          <div class="column is-half is-offset-one-quarter">
+            <div class="level control is-grouped is-horizontal">
+              <p class="control level-right">
+                <a class="button is-large is-warning">
+                  <span class="icon is-large">
+                    <i class="fa fa-times"></i>
+                  </span>
+                </a>
+              </p>
+              <p class="control ">
+                <a href="list_user.html"class="button is-large is-success">
+                  <span class="icon is-large">
+                    <i class="fa fa-check"></i>
+                  </span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!-- modal Detalles de Usuario para activar agregar clase is-active-->
+    <div class="modal " >
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Detalles de Usuario</p>
+        </header>
+        <section class="modal-card-body">
+          <div class="content has-text-centered">
+            <h4 class="title is-5">Nombre de Usuario</h4>
+            <p class="subtitle is-6"><strong>Fulanito de Tal</strong></p><br>
+            <h4 class="title is-5">Numero de Reservacion</h4>
+            <p class="subtitle is-6"><strong>3614578</strong></p><br>
+            <h4 class="title is-5">Correo Electronico</h4>
+            <p class="subtitle is-6"><strong>fulanito@reservacion.com</strong></p><br>
+            <h4 class="title is-5">Boletos Asignados</h4>
+            <li><strong>120215</strong></li>
+            <li><strong>120216</strong></li>
+            <li><strong>120217</strong></li>
+          </div>
+        </section>
+        <footer class="modal-card-foot ">
+          <div class="column is-half is-offset-one-quarter">
+            <div class="level control is-grouped is-horizontal">
+              <p class="control level-right">
+                <a class="button is-large is-warning">
+                  <span class="icon is-large">
+                    <i class="fa fa-times"></i>
+                  </span>
+                </a>
+              </p>
+              <p class="control ">
+                <a href="list_user.html"class="button is-large is-info">
+                  <span class="icon is-large">
+                    <i class="fa fa-pencil"></i>
+                  </span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!-- modal Editar Usuario para activar agregar clase is-active-->
+    <div class="modal " >
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Editar Usuario</p>
+        </header>
+        <section class="modal-card-body">
+          <div class="content has-text-centered">
+            <label class="label">Nombre de Usuario</label>
+            <p class="control">
+              <input class="input has-text-centered" type="text" name="name" value="Fulanito de Tal">
+            </p><br>
+            <label class="label">Correo Electronico</label>
+            <p class="control">
+              <input class="input has-text-centered" type="text" name="name" value="fulanito@reservacion.com">
+            </p><br>
+            <label class="label">Direccion</label>
+            <p class="control">
+              <input class="input has-text-centered" type="text" name="name" value="Casa de fulanito">
+            </p><br>
+            <label class="label">Telefono</label>
+            <p class="control">
+              <input class="input has-text-centered" type="text" name="name" value="9933555445">
+            </p><br>
+            <label class="label">Proveedor</label>
+            <p class="control">
+              <input class="input has-text-centered" type="text" name="name" value="Reservacion de Tabasco">
+            </p><br>
+            <label class="label">Numero de Reservacion</label>
+            <p class="control">
+              <input class="input has-text-centered" type="text" name="name" value="3614578">
+            </p>
+          </div>
+        </section>
+        <footer class="modal-card-foot ">
+          <div class="column is-half is-offset-one-quarter">
+            <div class="level control is-grouped is-horizontal">
+              <p class="control level-right">
+                <a class="button is-large is-warning">
+                  <span class="icon is-large">
+                    <i class="fa fa-times"></i>
+                  </span>
+                </a>
+              </p>
+              <p class="control ">
+                <a href="list_user.html"class="button is-large is-success">
+                  <span class="icon is-large">
+                    <i class="fa fa-check"></i>
+                  </span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
