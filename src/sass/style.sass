@@ -1,0 +1,42 @@
+@import ../../node_modules/bulma/sass/utilities/_all
+@import ../../node_modules/bulma/sass/base/_all
+@import ../../node_modules/bulma/sass/grid/columns
+@import ../../node_modules/bulma/sass/elements/button
+@import ../../node_modules/bulma/sass/elements/form
+@import ../../node_modules/bulma/sass/elements/table
+@import ../../node_modules/bulma/sass/elements/title
+@import ../../node_modules/bulma/sass/elements/other
+@import ../../node_modules/bulma/sass/components/nav
+@import ../../node_modules/bulma/sass/components/modal
+@import ../../node_modules/bulma/sass/components/pagination
+@import ../../node_modules/bulma/sass/components/level
+@import ../../node_modules/bulma/sass/layout/_all
+@import ../../node_modules/bulma/sass/elements/image
+
+.nav
+
+  .nav-item img
+    max-height: 128px
+
+  .nav-left
+    overflow: hidden
+
+
+@media screen and (max-width: $desktop - 1px)
+  .nav-item .title.is-1
+    font-size: 30px
+
+@media screen and (max-width: $tablet - 1px)
+  .nav
+    flex-wrap: wrap
+    display: flex
+
+    .container
+      flex-direction: column
+      align-items: center
+
+    .title.is-1
+      font-size: 20px
+
+  .box_table
+    overflow: auto
