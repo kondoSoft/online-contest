@@ -7,44 +7,62 @@ class TableUser extends Component{
   constructor(props){
     super(props)
     this.state = {
-      isChecked:false,
+      active: "",
+      id:"",
+      detailres:"",
       data:{
         rev1:{
           nombre:'Misty Abbott',
-          revervacion: 'Bass Guitar',
+          reservacion: 'Bass Guitar',
           email: '',
-          pagado: false,
+          checkPay: false,
           boletos: ''
         },
         rev2:{
           nombre:'John Smith',
-          revervacion: 'Rhythm Guitar',
+          reservacion: 'Rhythm Guitar',
           email: '',
-          pagado: false,
+          checkPay: false,
           boletos: ''
         },
         rev3:{
           nombre:'Robert Mikels',
-          revervacion: 'Lead Guitar',
+          reservacion: 'Lead Guitar',
           email: '',
-          pagado: false,
+          checkPay: false,
           boletos: ''
         },
         rev4:{
           nombre:'Karyn Holmbergs',
-          revervacion: 'Drums',
+          reservacion: 'Drums',
           email: '',
-          pagado: false,
+          checkPay: false,
           boletos: ''
         }
       }
     }
-    this.toggleChecked = this.toggleChecked.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleModal = this.handleModal.bind(this)
   }
-  toggleChecked(key){
-    var state = this.state.data
-    state[key].pagado = !state[key].pagado
-    this.setState({data:state})
+  handleChange(event){
+    const value = event.targer.value
+    const checked = Object.assign({}, this.state.checkPay)
+    if (!checked[value]){
+      checked[value] = true
+    }else{
+      checked[value] = false
+    }
+    this.setState({checked})
+  }
+  handleSubmit(event){
+    alert('Boxes checked: ' +
+    (this.state.checked))
+  }
+  handleModal(e, id){
+    e.preventDefault()
+    this.setState({active:"is-active"})
+    this.setState({id:id})
   }
   render(){
     return (
@@ -61,20 +79,21 @@ class TableUser extends Component{
           </thead>
           <tbody>
             {Object.keys(this.state.data).map((key)=>{
-              console.log(this.state.data[key].pagado);
               return(
                 <tr key={key}>
-                  <td><a href="#">{this.state.data[key].nombre}</a></td>
+                  <td><a href=""
+                  onClick={(e)=> {this.handleModal(e, key)}}>{this.state.data[key].nombre}</a></td>
                   <td>{this.state.data[key].reservacion}</td>
                   <td>{this.state.data[key].email}</td>
-                  <td>
+                  <td className="">
                     <p className="control has-addons has-addons-centered">
-                      <label className="checkbox">
-                        <input
-                         type="checkbox"
-                         onChange={()=> this.toggleChecked(key)}
-                         checked={this.state.data[key].pagado} />
-                      </label>
+                    <label className="checkbox">
+                      <input
+                       type="checkbox"
+                       onChange={this.handleChange}
+                       checked="" id={key}/>
+                    </label>
+
                     </p>
                   </td>
                   <td>{this.state.data[key].boletos}</td>
@@ -83,10 +102,10 @@ class TableUser extends Component{
             })}
           </tbody>
         </table>
-        <Pagination/>
+        <Pagination />
         <ModalEdit />
-        <ModalAsiggn isActive={this.state.isChecked}/>
-        <ModalDetails />
+        <ModalAsiggn />
+        <ModalDetails active={this.state.active} datos={this.state.data} id={this.state.id}/>
       </div>
     )
   }
