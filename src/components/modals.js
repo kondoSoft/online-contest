@@ -1,30 +1,56 @@
 import React, {Component} from "react"
 import '../css/App.css';
 import '../css/style.css';
+import Modal from "react-modal"
+import {Link} from 'react-router'
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+
+  }
+}
 
 export class ModalAsiggn extends Component{
   constructor(props){
     super(props)
     this.state = {
-      active: '',
+      checked: false
     }
-    this.close = this.close.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
-  componentWillReceiveProps(){
-    var active = this.props.isActive
-    // console.log(active);
-    active === false? this.setState({active:'is-active'}): this.setState({active:''}) ;
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.refs.subtitle.style.color = '#f00'
   }
-  close(){
-    this.setState({active: ''})
+  closeModal() {
+    this.setState({checked: false})
+  }
+  componentWillReceiveProps(nextProps){
+    console.log('props: ', nextProps);
+    if (nextProps) {
+      this.setState({checked: nextProps.checked})
+    }
   }
   render(){
     return(
-      <div className={`modal ${this.state.active}`} >
+      <Modal
+        isOpen={this.state.checked}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+      <div className='modal is-active' >
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">Asignacion de Boletos</p>
+          <p className="modal-card-title " ref='subtitle'>Asignacion de Boletos</p>
         </header>
         <section className="modal-card-body">
           <div className="content has-text-centered">
@@ -40,24 +66,25 @@ export class ModalAsiggn extends Component{
           <div className="column is-half is-offset-one-quarter">
             <div className="level control is-grouped is-horizontal">
               <p className="control level-right">
-              <a onClick={this.close} className="button is-large is-warning">
+              <a onClick={this.closeModal} className="button is-large is-warning">
                   <span className="icon is-large">
                     <i className="fa fa-times"></i>
                   </span>
                 </a>
               </p>
               <p className="control ">
-                <a href="list_user.html" className="button is-large is-success">
+                <Link href="" className="button is-large is-success">
                   <span className="icon is-large">
                     <i className="fa fa-check"></i>
                   </span>
-                </a>
+                </Link>
               </p>
             </div>
           </div>
         </footer>
       </div>
     </div>
+    </Modal>
     )
   }
 }
@@ -65,74 +92,88 @@ export class ModalDetails extends Component{
   constructor(props){
     super(props)
     this.state = {
-      active: '',
+      modalIsOpen: false
     }
-    this.close = this.close.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
-  componentWillReceiveProps(){
-    var active = this.props.active
-    // console.log(active);
-    if(active.length !== 0)
-    {
-      this.setState({active: active})
-    }
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.refs.subtitle.style.color = '#f00'
   }
-  close(){
-    this.setState({active: ''})
+  closeModal() {
+    this.setState({modalIsOpen: false})
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({modalIsOpen: nextProps.isOpen})
+    console.log('ModalDetails: ', nextProps.isOpen );
+
   }
   render(){
+    var boletos = this.props.detailRes.boletos
+    var boleto = []
+    boleto = (boletos !== undefined)? boletos: boleto;
+    console.log('state modal open: ', this.state.modalIsOpen);
     return(
-      <div className={`modal ${this.state.active}`}  >
-      <div className="modal-background"></div>
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title">Detalles de Usuario</p>
-        </header>
-        <section className="modal-card-body">
-        {Object.keys(this.props.datos).map((key)=>{
-          return(
-            <div className="content has-text-centered">
-              <h4 className="title is-5">Nombre </h4>
-              <p className="subtitle is-6"><strong>{this.props.datos[key].nombre}</strong></p><br/>
-              <h4 className="title is-5">Numero de Reservacion</h4>
-              <p className="subtitle is-6"><strong>{this.props.datos[key].reservacion}</strong></p><br/>
-              <h4 className="title is-5">Correo Electronico</h4>
-              <p className="subtitle is-6"><strong>{this.props.datos[key].email}</strong></p><br/>
-              <h4 className="title is-5">Boletos Asignados</h4>
-              <li><strong>120215</strong></li>
-              <li><strong>120216</strong></li>
-              <li><strong>120217</strong></li>
-            </div>
-          )
-        })
-      }
-        </section>
-        <footer className="modal-card-foot ">
-          <div className="column is-half is-offset-one-quarter">
-            <div className="level control is-grouped is-horizontal">
-              <p className="control level-right">
-                <a className="button is-large is-warning" onClick={this.close}>
-                  <span className="icon is-large">
-                    <i className="fa fa-times"></i>
-                  </span>
-                </a>
-              </p>
-              <p className="control ">
-                <a href="list_user.html" className="button is-large is-info">
-                  <span className="icon is-large">
-                    <i className="fa fa-pencil"></i>
-                  </span>
-                </a>
-              </p>
-            </div>
+      <Modal
+        isOpen={this.state.modalIsOpen}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+          <div className='modal is-active'   >
+          <div className="modal-background"></div>
+          <div className="modal-card">
+            <header className="modal-card-head">
+              <p ref='subtitle' className="modal-card-title">Detalles de Usuario</p>
+            </header>
+            <section className="modal-card-body">
+                <div className="content has-text-centered">
+                  <h4 className="title is-5">Nombre </h4>
+                  <p className="subtitle is-6"><strong>{this.props.detailRes.nombre}</strong></p><br/>
+                  <h4 className="title is-5">Numero de Reservacion</h4>
+                  <p className="subtitle is-6"><strong>{this.props.detailRes.reservacion}</strong></p><br/>
+                  <h4 className="title is-5">Correo Electronico</h4>
+                  <p className="subtitle is-6"><strong>{this.props.detailRes.email}</strong></p><br/>
+                  <h4 className="title is-5">Boletos Asignados</h4>
+                  {boleto.map((item, index)=>{
+                    return(
+                      <li key={index}><strong>{item}</strong></li>
+                    )
+                  })}
+
+                </div>
+
+            </section>
+            <footer className="modal-card-foot ">
+              <div className="column is-half is-offset-one-quarter">
+                <div className="level control is-grouped is-horizontal">
+                  <p className="control level-right">
+                    <a className="button is-large is-warning" onClick={this.closeModal}>
+                      <span className="icon is-large">
+                        <i className="fa fa-times"></i>
+                      </span>
+                    </a>
+                  </p>
+                  <p className="control ">
+                    <a href="list_user.html" className="button is-large is-info">
+                      <span className="icon is-large">
+                        <i className="fa fa-pencil"></i>
+                      </span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </footer>
           </div>
-        </footer>
-      </div>
-    </div>
+        </div>
+      </Modal>
     )
   }
 }
 export class ModalEdit extends Component{
+
   render(){
     return(
       <div className="modal " >

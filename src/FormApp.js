@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
+import './css/App.css';
 import './css/style.css';
 import Navbar from './components/navbar';
+import FormUser from './components/form-user';
 import Footer from './components/footer';
-import ListUser from './components/list-user'
 
-
-class ListApp extends Component {
+class FormApp extends Component {
   render() {
     return (
       <div>
         <Navbar/>
-        <ListUser/>
+        <FormUser/>
         <Footer/>
       </div>
 
@@ -19,4 +19,4 @@ class ListApp extends Component {
 }
 
 
-export default ListApp;
+export default FormApp;

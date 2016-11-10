@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Buttons from './buttons';
+import {Buttons} from './buttons';
 
 
 class FormUser extends Component{

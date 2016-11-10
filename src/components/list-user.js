@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {ButtonPrint} from './buttons';
-
 import TableUser from './table-user';
+import { Link } from 'react-router';
 
 class ListUser extends Component {
   render(){
@@ -41,7 +41,7 @@ class Breadcrumb extends Component{
   render(){
     return(
       <div className="section">
-        <p className=" "><a href="index.html">Home</a> > Lista de usuarios</p>
+        <p className=" "><Link to="/">Home</Link> > Lista de usuarios</p>
       </div>
     )
   }

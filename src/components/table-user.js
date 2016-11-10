@@ -1,102 +1,107 @@
 import React, {Component} from "react"
-import Pagination from './pagination';
-import {ModalAsiggn, ModalEdit, ModalDetails} from './modals';
+import Pagination from './pagination'
+import {ModalAsiggn, ModalEdit, ModalDetails} from './modals'
+
 
 
 class TableUser extends Component{
   constructor(props){
     super(props)
     this.state = {
-      active: "",
-      id:"",
-      detailres:"",
+      key:'rev1',
+      modalIsOpen: false,
+      detailRes:"",
       data:{
         rev1:{
           nombre:'Misty Abbott',
           reservacion: 'Bass Guitar',
           email: '',
-          checkPay: false,
-          boletos: ''
+          checked: false,
+          boletos: [
+            10400,
+            10401,
+            10402
+          ]
         },
         rev2:{
           nombre:'John Smith',
           reservacion: 'Rhythm Guitar',
           email: '',
-          checkPay: false,
-          boletos: ''
+          checked: false,
+          boletos: []
         },
         rev3:{
           nombre:'Robert Mikels',
           reservacion: 'Lead Guitar',
           email: '',
-          checkPay: false,
-          boletos: ''
+          checked: false,
+          boletos: []
         },
         rev4:{
           nombre:'Karyn Holmbergs',
           reservacion: 'Drums',
           email: '',
-          checkPay: false,
-          boletos: ''
+          checked: false,
+          boletos: []
         }
       }
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleModal = this.handleModal.bind(this)
   }
-  handleChange(event){
-    const value = event.targer.value
-    const checked = Object.assign({}, this.state.checkPay)
-    if (!checked[value]){
-      checked[value] = true
-    }else{
-      checked[value] = false
-    }
-    this.setState({checked})
-  }
-  handleSubmit(event){
-    alert('Boxes checked: ' +
-    (this.state.checked))
-  }
-  handleModal(e, id){
+  this.openModal = this.openModal.bind(this)
+  this.openCheck = this.openCheck.bind(this)
+}
+
+  openModal(e, key) {
     e.preventDefault()
-    this.setState({active:"is-active"})
-    this.setState({id:id})
+    this.setState({modalIsOpen: true})
+    this.setState({detailRes:this.state.data[key]})
   }
+
+  openCheck(key){
+    var state = this.state.data
+    var item = this.state.key
+    var checked = document.getElementById(key).checked
+    if(checked){
+      state[key].checked = checked
+      item = key
+      this.setState({data: state})
+      this.setState({key: item})
+    }
+  }
+
   render(){
+
     return (
       <div className="column box_table">
         <table className="table is-striped">
           <thead>
-            <tr>
+            <tr >
               <th>Participante</th>
               <th>Reservacion</th>
               <th>Correo Electronico</th>
-              <th>Pagado</th>
-              <th>Boletos</th>
+              <th style={{ textAlign:'center'}}>Pagado</th>
+              <th style={{ textAlign:'center'}}>Boletos</th>
             </tr>
           </thead>
           <tbody>
             {Object.keys(this.state.data).map((key)=>{
               return(
                 <tr key={key}>
-                  <td><a href=""
-                  onClick={(e)=> {this.handleModal(e, key)}}>{this.state.data[key].nombre}</a></td>
+                  <td><a onClick={(e)=>this.openModal(e, key)} href="">{this.state.data[key].nombre}</a></td>
                   <td>{this.state.data[key].reservacion}</td>
                   <td>{this.state.data[key].email}</td>
                   <td className="">
                     <p className="control has-addons has-addons-centered">
                     <label className="checkbox">
-                      <input
-                       type="checkbox"
-                       onChange={this.handleChange}
-                       checked="" id={key}/>
+                      <input type="checkbox" id={key} onChange={()=>this.openCheck(key)}/>
                     </label>
 
                     </p>
                   </td>
-                  <td>{this.state.data[key].boletos}</td>
+                  <td>
+                    <p className="control has-addons has-addons-centered">
+                      {this.state.data[key].boletos.length}
+                    </p>
+                  </td>
                 </tr>
               )
             })}
@@ -104,8 +109,8 @@ class TableUser extends Component{
         </table>
         <Pagination />
         <ModalEdit />
-        <ModalAsiggn />
-        <ModalDetails active={this.state.active} datos={this.state.data} id={this.state.id}/>
+        <ModalAsiggn checked={this.state.data[this.state.key].checked}/>
+        <ModalDetails detailRes={this.state.detailRes} isOpen={this.state.modalIsOpen} />
       </div>
     )
   }
