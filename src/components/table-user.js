@@ -1,8 +1,17 @@
 import React, {Component} from "react"
 import Pagination from './pagination'
 import {ModalAsiggn, ModalEdit, ModalDetails} from './modals'
+import Modal from 'react-modal'
 
-
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+  }
+}
 
 class TableUser extends Component{
   constructor(props){
@@ -47,29 +56,25 @@ class TableUser extends Component{
       }
   }
   this.openModal = this.openModal.bind(this)
-  this.openCheck = this.openCheck.bind(this)
+  this.afterOpenModal = this.afterOpenModal.bind(this)
+  this.closeModal = this.closeModal.bind(this)
 }
 
   openModal(e, key) {
     e.preventDefault()
     this.setState({modalIsOpen: true})
     this.setState({detailRes:this.state.data[key]})
+    console.log(this.state.data[key]);
   }
-
-  openCheck(key){
-    var state = this.state.data
-    var item = this.state.key
-    var checked = document.getElementById(key).checked
-    if(checked){
-      state[key].checked = checked
-      item = key
-      this.setState({data: state})
-      this.setState({key: item})
-    }
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.refs.subtitle.style.color = '#f00'
+  }
+  closeModal() {
+    this.setState({modalIsOpen: false})
   }
 
   render(){
-
     return (
       <div className="column box_table">
         <table className="table is-striped">
@@ -83,18 +88,18 @@ class TableUser extends Component{
             </tr>
           </thead>
           <tbody>
+
             {Object.keys(this.state.data).map((key)=>{
               return(
                 <tr key={key}>
-                  <td><a onClick={(e)=>this.openModal(e, key)} href="">{this.state.data[key].nombre}</a></td>
+                  <td><a onClick={(e)=>this.openModal(e, key)} >{this.state.data[key].nombre}</a></td>
                   <td>{this.state.data[key].reservacion}</td>
                   <td>{this.state.data[key].email}</td>
                   <td className="">
                     <p className="control has-addons has-addons-centered">
                     <label className="checkbox">
-                      <input type="checkbox" id={key} onChange={()=>this.openCheck(key)}/>
+                      <input type="checkbox" id={key} onChange={(e)=>this.openModal(e, key)}/>
                     </label>
-
                     </p>
                   </td>
                   <td>
@@ -107,10 +112,68 @@ class TableUser extends Component{
             })}
           </tbody>
         </table>
+          <Modal
+              isOpen={this.state.modalIsOpen}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+
+
+              <div className='modal is-active'   >
+                <div className="modal-background"></div>
+                  <div className="modal-card">
+                    <header className="modal-card-head">
+                      <p ref='subtitle' className="modal-card-title">Detalles de Usuario</p>
+                    </header>
+                    <section className="modal-card-body">
+                    <div className="content has-text-centered">
+                      <h4 className="title is-5">Nombre </h4>
+                      <p className="subtitle is-6"><strong>{this.state.detailRes.nombre}</strong></p><br/>
+                      <h4 className="title is-5">Numero de Reservacion</h4>
+                      <p className="subtitle is-6"><strong>{this.state.detailRes.reservacion}</strong></p><br/>
+                      <h4 className="title is-5">Correo Electronico</h4>
+                      <p className="subtitle is-6"><strong>{this.state.detailRes.email}</strong></p><br/>
+                      <h4 className="title is-5">Boletos Asignados</h4>
+                    </div>
+                    </section>
+                    <footer className="modal-card-foot ">
+                      <div className="column is-half is-offset-one-quarter">
+                        <div className="level control is-grouped is-horizontal">
+                          <p className="control level-right">
+                            <a className="button is-large is-warning" onClick={this.closeModal}>
+                              <span className="icon is-large">
+                                <i className="fa fa-times"></i>
+                              </span>
+                            </a>
+                          </p>
+                          <p className="control ">
+                            <a href="list_user.html" className="button is-large is-info">
+                              <span className="icon is-large">
+                                <i className="fa fa-pencil"></i>
+                              </span>
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                    </footer>
+                  </div>
+                </div>
+            </Modal>
         <Pagination />
-        <ModalEdit />
-        <ModalAsiggn checked={this.state.data[this.state.key].checked}/>
-        <ModalDetails detailRes={this.state.detailRes} isOpen={this.state.modalIsOpen} />
+        {/* <ModalEdit />
+        <ModalAsiggn checkOpen={this.state.modalCheckOpen}/>
+        <ModalDetails detailRes={this.state.detailRes} isOpen={this.state.modalIsOpen} /> */}
+      </div>
+    )
+  }
+}
+class ModalAssign extends Component{
+  render(){
+    return(
+      <div>
+        {this.props.children}
       </div>
     )
   }

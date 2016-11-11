@@ -19,10 +19,11 @@ export class ModalAsiggn extends Component{
   constructor(props){
     super(props)
     this.state = {
-      checked: false
+      checked: false,
     }
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.checkClient = this.checkClient.bind(this)
   }
   afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -32,10 +33,14 @@ export class ModalAsiggn extends Component{
     this.setState({checked: false})
   }
   componentWillReceiveProps(nextProps){
-    console.log('props: ', nextProps);
+
     if (nextProps) {
-      this.setState({checked: nextProps.checked})
+      this.setState({checked: true})
     }
+
+  }
+  checkClient(){
+    console.log('props',this.props);
   }
   render(){
     return(
@@ -67,13 +72,13 @@ export class ModalAsiggn extends Component{
             <div className="level control is-grouped is-horizontal">
               <p className="control level-right">
               <a onClick={this.closeModal} className="button is-large is-warning">
-                  <span className="icon is-large">
-                    <i className="fa fa-times"></i>
-                  </span>
-                </a>
+                <span className="icon is-large">
+                  <i className="fa fa-times"></i>
+                </span>
+              </a>
               </p>
               <p className="control ">
-                <Link href="" className="button is-large is-success">
+                <Link onClick={this.props.checkClient} href="" className="button is-large is-success">
                   <span className="icon is-large">
                     <i className="fa fa-check"></i>
                   </span>
@@ -92,7 +97,8 @@ export class ModalDetails extends Component{
   constructor(props){
     super(props)
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      modalCheckOpen: false
     }
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -105,15 +111,13 @@ export class ModalDetails extends Component{
     this.setState({modalIsOpen: false})
   }
   componentWillReceiveProps(nextProps){
-    this.setState({modalIsOpen: nextProps.isOpen})
-    console.log('ModalDetails: ', nextProps.isOpen );
 
   }
   render(){
     var boletos = this.props.detailRes.boletos
     var boleto = []
     boleto = (boletos !== undefined)? boletos: boleto;
-    console.log('state modal open: ', this.state.modalIsOpen);
+
     return(
       <Modal
         isOpen={this.state.modalIsOpen}
