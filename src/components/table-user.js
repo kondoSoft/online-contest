@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import Pagination from './pagination'
 // import {ModalAsiggn, ModalEdit, ModalDetails} from './modals'
 import Modal from 'react-modal'
+import request from 'superagent'
 
 const customStyles = {
   content : {
@@ -22,51 +23,58 @@ class TableUser extends Component{
       buttons:'',
       modalIsOpen: false,
       detailRes:"",
-      data:{
-        rev1:{
-          nombre:'Misty Abbott',
-          reservacion: '105241566',
-          email: '',
-          checked: false,
-          boletos: [
-            10400,
-            10401,
-            10402
-          ]
-        },
-        rev2:{
-          nombre:'John Smith',
-          reservacion: '225241555',
-          email: '',
-          checked: false,
-          boletos: []
-        },
-        rev3:{
-          nombre:'Robert Mikels',
-          reservacion: '102555644',
-          email: '',
-          checked: false,
-          boletos: []
-        },
-        rev4:{
-          nombre:'Karyn Holmbergs',
-          reservacion: '125458732',
-          email: '',
-          checked: false,
-          boletos: []
-        }
-      }
+      data:[]
   }
   this.openModal = this.openModal.bind(this)
   this.closeModal = this.closeModal.bind(this)
+  this.renderItems = this.renderItems.bind(this)
 }
+  componentDidMount(){
+    request
+      .get('http://localhost:8080/users')
+      .end(function(err, res){
+        this.setState({ data : res.body.data })
+
+      }.bind(this));
+  }
+
+  renderItems(){
+
+    var item = this.state.data
+    return(
+      item.map(function(item, key){
+        return(
+          <tr key={key}>
+            <td><a name="anchor" onClick={(e)=>this.openModal(e, key)} >{item.name}</a></td>
+            <td>{item.reservation}</td>
+            <td>{item.email}</td>
+            <td className="">
+              <p className="control has-addons has-addons-centered">
+              <label className="checkbox">
+                <input name="check" type="checkbox" id={key} onChange={(e)=>this.openModal(e, key)}/>
+              </label>
+              </p>
+            </td>
+            <td>
+              <p className="control has-addons has-addons-centered">
+
+                {item.tickets[0] === null ? ' ' : item.tickets.length}
+              </p>
+            </td>
+          </tr>
+        )
+      }.bind(this))
+    )
+  }
 
   openModal(e, key) {
+    var itemModal = this.state.data[key]
     e.preventDefault()
     this.setState({modalIsOpen: true})
-    this.setState({detailRes:this.state.data[key]})
+    this.setState({detailRes:itemModal})
     this.setState({name:e.target.name})
   }
+
   closeModal() {
     this.setState({modalIsOpen: false})
   }
@@ -75,12 +83,21 @@ class TableUser extends Component{
       return(
         <div className="content has-text-centered">
           <h4 className="title is-5">Nombre </h4>
-          <p className="subtitle is-6"><strong>{this.state.detailRes.nombre}</strong></p><br/>
+          <p className="subtitle is-6"><strong>{this.state.detailRes.name}</strong></p><br/>
           <h4 className="title is-5">Numero de Reservacion</h4>
-          <p className="subtitle is-6"><strong>{this.state.detailRes.reservacion}</strong></p><br/>
+          <p className="subtitle is-6"><strong>{this.state.detailRes.reservation}</strong></p><br/>
           <h4 className="title is-5">Correo Electronico</h4>
           <p className="subtitle is-6"><strong>{this.state.detailRes.email}</strong></p><br/>
           <h4 className="title is-5">Boletos Asignados</h4>
+          <ul className="subtitle is-6">
+          {this.state.detailRes.tickets.map(function(item, i){
+            return(
+              <li key={i}><strong>{item}</strong></li>
+            )
+          })}
+          </ul>
+          <br/>
+
         </div>
       )
     }else if (this.state.name === 'check'){
@@ -140,28 +157,7 @@ class TableUser extends Component{
             </tr>
           </thead>
           <tbody>
-
-            {Object.keys(this.state.data).map((key)=>{
-              return(
-                <tr key={key}>
-                  <td><a name="anchor" onClick={(e)=>this.openModal(e, key)} >{this.state.data[key].nombre}</a></td>
-                  <td>{this.state.data[key].reservacion}</td>
-                  <td>{this.state.data[key].email}</td>
-                  <td className="">
-                    <p className="control has-addons has-addons-centered">
-                    <label className="checkbox">
-                      <input name="check" type="checkbox" id={key} onChange={(e)=>this.openModal(e, key)}/>
-                    </label>
-                    </p>
-                  </td>
-                  <td>
-                    <p className="control has-addons has-addons-centered">
-                      {this.state.data[key].boletos.length}
-                    </p>
-                  </td>
-                </tr>
-              )
-            })}
+            {this.renderItems()}
           </tbody>
         </table>
           <Modal

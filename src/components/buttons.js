@@ -1,7 +1,16 @@
 import React, {Component} from "react"
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 
 export class Buttons extends Component{
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e){
+    e.preventDefault()
+    browserHistory.push('/listUser')
+  }
   render(){
     return (
       <div className="level control is-grouped is-horizontal">
@@ -13,11 +22,11 @@ export class Buttons extends Component{
           </Link>
         </p>
         <p className="control ">
-          <Link to="/listUser" className="button is-large is-success">
+          <button type='submit'  className="button is-large is-success">
             <span className="icon is-large">
               <i className="fa fa-check"></i>
             </span>
-          </Link>
+          </button>
         </p>
       </div>
     )

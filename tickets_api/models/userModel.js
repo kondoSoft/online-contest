@@ -6,9 +6,12 @@ var Schema = mongoose.Schema,
 var UserSchema = new Schema({
     id    : ObjectId,
     name    : String,
+    address : String,
+    phone   : Number,
     reservation     : Number,
     email      : String,
     checked    : Boolean,
+    provider   : String,
     tickets    : [Number]
 });
 
