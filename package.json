@@ -14,7 +14,6 @@
     "react-dom": "^15.3.2",
     "react-modal": "^1.5.2",
     "react-router": "^3.0.0",
-    "react-router-form": "^1.0.2",
     "restify": "^4.2.0",
     "restify-validator": "^0.3.1",
     "superagent": "^2.3.0"

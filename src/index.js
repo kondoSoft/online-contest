@@ -8,7 +8,7 @@ import './css/index.css';
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={FormApp}/>
-    <Route path="/listUser" component={ListApp}/>
+    <Route path="/users" component={ListApp}/>
 
   </Router>
 ),  document.getElementById('root'))

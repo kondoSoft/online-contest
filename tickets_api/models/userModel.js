@@ -5,11 +5,23 @@ var Schema = mongoose.Schema,
 
 var UserSchema = new Schema({
     id    : ObjectId,
-    name    : String,
+    name    : {
+      type: String,
+      required: [ true, 'El nombre es necesario']
+    },
     address : String,
-    phone   : Number,
-    reservation     : Number,
-    email      : String,
+    phone   : {
+      type: Number
+    },
+    reservation     : {
+      type: Number,
+      required: [ true, 'El numero de reservacion es necesario'],
+      unique: true
+    },
+    email      : {
+      type: String,
+      required: [ true, 'El correo electronico es necesario']
+    },
     checked    : Boolean,
     provider   : String,
     tickets    : [Number]

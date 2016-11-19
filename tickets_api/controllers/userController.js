@@ -38,6 +38,7 @@ module.exports = function(server) {
       helpers.failure(res, next, errors, 400)
       return next()
     }
+
     var user = new UserModel()
     user.name = req.params.name
     user.address = req.params.address
