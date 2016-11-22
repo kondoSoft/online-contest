@@ -6,8 +6,7 @@ var Schema = mongoose.Schema,
 var UserSchema = new Schema({
     id    : ObjectId,
     name    : {
-      type: String,
-      required: [ true, 'El nombre es necesario']
+      type: String
     },
     address : String,
     phone   : {
@@ -15,12 +14,10 @@ var UserSchema = new Schema({
     },
     reservation     : {
       type: Number,
-      required: [ true, 'El numero de reservacion es necesario'],
       unique: true
     },
     email      : {
-      type: String,
-      required: [ true, 'El correo electronico es necesario']
+      type: String
     },
     checked    : Boolean,
     provider   : String,

@@ -24,8 +24,7 @@ class FormUser extends Component{
     .set('Accept', 'application/json')
     .end(function(err, res){
       if(err){
-
-        console.log(res.text);
+        console.log(res);
       }
       if(res.statusText === "OK"){
         console.log(res);
@@ -46,7 +45,10 @@ class FormUser extends Component{
                   <div className="control">
                     <label className="label">Nombre:</label>
                     <p className="control">
-                      <input ref='name' required className="input is-primary " type="text" placeholder="Nombre"/>
+                      <input ref='name' className="input is-primary " required type="text" placeholder="Nombre"/>
+                      {name === 'null' ? (
+                        <label>Requiere Datos</label>
+                      ) : ''}
                     </p>
                     <label className="label">Direccion:</label>
                     <p className="control">

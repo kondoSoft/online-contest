@@ -40,6 +40,7 @@ module.exports = function(server) {
     }
 
     var user = new UserModel()
+    var error
     user.name = req.params.name
     user.address = req.params.address
     user.phone  = req.params.phone

@@ -1,131 +1,11 @@
 import React, {Component} from "react"
 import '../css/App.css';
 import '../css/style.css';
-import Modal from "react-modal"
-import {Link} from 'react-router'
+import request from 'superagent'
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-
-  }
-}
-
-export class ModalAsiggn extends Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      checked: false,
-    }
-    this.afterOpenModal = this.afterOpenModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-    this.checkClient = this.checkClient.bind(this)
-  }
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00'
-  }
-  closeModal() {
-    this.setState({checked: false})
-  }
-  componentWillReceiveProps(nextProps){
-
-    if (nextProps) {
-      this.setState({checked: true})
-    }
-
-  }
-  checkClient(){
-    console.log('props',this.props);
-  }
-  render(){
-    return(
-      <Modal
-        isOpen={this.state.checked}
-        onAfterOpen={this.afterOpenModal}
-        onRequestClose={this.closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-      <div className='modal is-active' >
-      <div className="modal-background"></div>
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title " ref='subtitle'>Asignacion de Boletos</p>
-        </header>
-        <section className="modal-card-body">
-          <div className="content has-text-centered">
-            <h4 className="title is-5">Nombre de Usuario</h4>
-            <p className="subtitle is-6"><strong>Fulanito de Tal</strong></p><br/>
-            <h4 className="title is-5">Numero de Reservacion</h4>
-            <p className="subtitle is-6"><strong>3614578</strong></p>
-            <h4>Cantidad</h4>
-            <input id="campo" name="Boletos" type="number" min="0" max="5"/>
-          </div>
-        </section>
-        <footer className="modal-card-foot ">
-          <div className="column is-half is-offset-one-quarter">
-            <div className="level control is-grouped is-horizontal">
-              <p className="control level-right">
-              <a onClick={this.closeModal} className="button is-large is-warning">
-                <span className="icon is-large">
-                  <i className="fa fa-times"></i>
-                </span>
-              </a>
-              </p>
-              <p className="control ">
-                <Link onClick={this.props.checkClient} href="" className="button is-large is-success">
-                  <span className="icon is-large">
-                    <i className="fa fa-check"></i>
-                  </span>
-                </Link>
-              </p>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-    </Modal>
-    )
-  }
-}
 export class ModalDetails extends Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      modalIsOpen: false,
-      modalCheckOpen: false
-    }
-    this.afterOpenModal = this.afterOpenModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-  }
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00'
-  }
-  closeModal() {
-    this.setState({modalIsOpen: false})
-  }
-  componentWillReceiveProps(nextProps){
-
-  }
   render(){
-    var boletos = this.props.detailRes.boletos
-    var boleto = []
-    boleto = (boletos !== undefined)? boletos: boleto;
-
     return(
-      <Modal
-        isOpen={this.state.modalIsOpen}
-        onAfterOpen={this.afterOpenModal}
-        onRequestClose={this.closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
           <div className='modal is-active'   >
           <div className="modal-background"></div>
           <div className="modal-card">
@@ -135,33 +15,32 @@ export class ModalDetails extends Component{
             <section className="modal-card-body">
                 <div className="content has-text-centered">
                   <h4 className="title is-5">Nombre </h4>
-                  <p className="subtitle is-6"><strong>{this.props.detailRes.nombre}</strong></p><br/>
+                  <p className="subtitle is-6"><strong>{this.props.dataDetails.name}</strong></p><br/>
                   <h4 className="title is-5">Numero de Reservacion</h4>
-                  <p className="subtitle is-6"><strong>{this.props.detailRes.reservacion}</strong></p><br/>
+                  <p className="subtitle is-6"><strong>{this.props.dataDetails.reservation}</strong></p><br/>
                   <h4 className="title is-5">Correo Electronico</h4>
-                  <p className="subtitle is-6"><strong>{this.props.detailRes.email}</strong></p><br/>
+                  <p className="subtitle is-6"><strong>{this.props.dataDetails.email}</strong></p><br/>
                   <h4 className="title is-5">Boletos Asignados</h4>
-                  {boleto.map((item, index)=>{
+                  {this.props.dataDetails.tickets.map((item, index)=>{
                     return(
                       <li key={index}><strong>{item}</strong></li>
                     )
                   })}
-
                 </div>
-
             </section>
             <footer className="modal-card-foot ">
               <div className="column is-half is-offset-one-quarter">
                 <div className="level control is-grouped is-horizontal">
                   <p className="control level-right">
-                    <a className="button is-large is-warning" onClick={this.closeModal}>
+                    <a className="button is-large is-warning" onClick={this.props.closeM}>
+
                       <span className="icon is-large">
                         <i className="fa fa-times"></i>
                       </span>
                     </a>
                   </p>
                   <p className="control ">
-                    <a href="list_user.html" className="button is-large is-info">
+                    <a onClick={(e)=>this.props.editModal(e, 'edit')} className="button is-large is-info edit">
                       <span className="icon is-large">
                         <i className="fa fa-pencil"></i>
                       </span>
@@ -172,69 +51,170 @@ export class ModalDetails extends Component{
             </footer>
           </div>
         </div>
-      </Modal>
     )
   }
 }
-export class ModalEdit extends Component{
+export class ModalAsiggn extends Component{
+  constructor(props){
+    super(props)
 
+    this.submit = this.submit.bind(this)
+  }
+  submit(e){
+    e.preventDefault()
+    request.put(`http://localhost:8080/user/${this.props.dataDetails._id}`)
+    .send({
+        tickets    : this.refs.tickets.value
+    })
+    .set('Accept', 'application/json')
+    .end(function(err, res){
+      if(err){
+        console.log(res);
+      }
+      if(res.statusText === "OK"){
+        console.log(res);
+        window.location.href = "http://localhost:3000/users";
+      }
+    })
+  }
   render(){
     return(
-      <div className="modal " >
-        <div className="modal-background"></div>
+      <div className='modal is-active' >
+      <div className="modal-background"></div>
+      <form onSubmit={this.submit} action='http://localhost:8080/user/'>
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">Editar Usuario</p>
+            <p className="modal-card-title " ref='subtitle'>Asignacion de Boletos</p>
           </header>
           <section className="modal-card-body">
             <div className="content has-text-centered">
-              <label className="label">Nombre de Usuario</label>
-              <p className="control">
-                <input className="input has-text-centered" type="text" name="name"/>
-              </p><br/>
-              <label className="label">Correo Electronico</label>
-              <p className="control">
-                <input className="input has-text-centered" type="text" name="name"/>
-              </p><br/>
-              <label className="label">Direccion</label>
-              <p className="control">
-                <input className="input has-text-centered" type="text" name="name"/>
-              </p><br/>
-              <label className="label">Telefono</label>
-              <p className="control">
-                <input className="input has-text-centered" type="text" name="name"/>
-              </p><br/>
-              <label className="label">Proveedor</label>
-              <p className="control">
-                <input className="input has-text-centered" type="text" name="name"/>
-              </p><br/>
-              <label className="label">Numero de Reservacion</label>
-              <p className="control">
-                <input className="input has-text-centered" type="text" name="name"/>
-              </p>
+              <h4 className="title is-5">Nombre de Usuario</h4>
+              <p className="subtitle is-6"><strong>{this.props.dataDetails.name}</strong></p><br/>
+              <h4 className="title is-5">Numero de Reservacion</h4>
+              <p className="subtitle is-6"><strong>{this.props.dataDetails.reservation}</strong></p>
+              <h4>Cantidad</h4>
+              {/* Asignacion de Tickets */}
+              <input ref='tickets' id="campo" name="Boletos" type="number" min="0" max="5"/>
             </div>
           </section>
           <footer className="modal-card-foot ">
             <div className="column is-half is-offset-one-quarter">
               <div className="level control is-grouped is-horizontal">
                 <p className="control level-right">
-                  <a className="button is-large is-warning">
-                    <span className="icon is-large">
-                      <i className="fa fa-times"></i>
-                    </span>
-                  </a>
+                <a onClick={this.props.closeM} className="button is-large is-warning">
+                  <span className="icon is-large">
+                    <i className="fa fa-times"></i>
+                  </span>
+                </a>
                 </p>
                 <p className="control ">
-                  <a href="list_user.html" className="button is-large is-success">
+                  <button className="button is-large is-success">
                     <span className="icon is-large">
                       <i className="fa fa-check"></i>
                     </span>
-                  </a>
+                  </button>
                 </p>
               </div>
             </div>
           </footer>
         </div>
+      </form>
+    </div>
+    )
+  }
+}
+
+export class ModalEdit extends Component{
+  constructor(props){
+    super(props)
+
+    this.submit = this.submit.bind(this)
+  }
+  submit(e){
+    e.preventDefault()
+    request.put(`http://localhost:8080/user/${this.props.dataDetails._id}`)
+    .send({
+        name       : this.refs.name.value,
+        address    : this.refs.address.value,
+        phone      : this.refs.phone.value,
+        reservation: this.refs.reservation.value,
+        email      : this.refs.email.value,
+        checked    : '',
+        provider   : this.refs.provider.value,
+        tickets    : ''
+    })
+    .set('Accept', 'application/json')
+    .end(function(err, res){
+      if(err){
+        console.log(res);
+      }
+      if(res.statusText === "OK"){
+        console.log(res);
+        window.location.href = "http://localhost:3000/users";
+      }
+    })
+  }
+  render(){
+    return(
+      <div className="modal is-active" >
+        <div className="modal-background"></div>
+        <form onSubmit={this.submit} action='http://localhost:8080/user/'>
+          <div className="modal-card">
+            <header className="modal-card-head">
+              <p className="modal-card-title">Editar Usuario</p>
+            </header>
+            <section className="modal-card-body">
+              <div className="content has-text-centered">
+
+                  <label className="label">Nombre de Usuario</label>
+                  <p className="control">
+                    <input ref='name' className="input has-text-centered" type="text" name="name" defaultValue={this.props.dataDetails.name}/>
+                  </p><br/>
+                  <label className="label">Correo Electronico</label>
+                  <p className="control">
+                    <input ref='email' className="input has-text-centered" type="text" name="name" defaultValue={this.props.dataDetails.email}/>
+                  </p><br/>
+                  <label className="label">Direccion</label>
+                  <p className="control">
+                    <input ref='address'  className="input has-text-centered" type="text" name="name" defaultValue={this.props.dataDetails.address}/>
+                  </p><br/>
+                  <label className="label">Telefono</label>
+                  <p className="control">
+                    <input ref='phone'  className="input has-text-centered" type="text" name="name" defaultValue={this.props.dataDetails.phone}/>
+                  </p><br/>
+                  <label className="label">Proveedor</label>
+                  <p className="control">
+                    <input ref='provider'  className="input has-text-centered" type="text" name="name" defaultValue={this.props.dataDetails.provider}/>
+                  </p><br/>
+                  <label className="label">Numero de Reservacion</label>
+                  <p className="control">
+                    <input ref='reservation'  className="input has-text-centered" type="text" name="name" defaultValue={this.props.dataDetails.reservation}/>
+                  </p>
+
+              </div>
+            </section>
+            <footer className="modal-card-foot ">
+              <div className="column is-half is-offset-one-quarter">
+                <div className="level control is-grouped is-horizontal">
+                  <p className="control level-right">
+                    <a onClick={this.props.closeM} className="button is-large is-warning">
+                      <span className="icon is-large">
+                        <i className="fa fa-times"></i>
+                      </span>
+                    </a>
+                  </p>
+                  <p className="control ">
+                    <button className="button is-large is-success">
+                      <span className="icon is-large">
+                        <i className="fa fa-check"></i>
+                      </span>
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </form>
       </div>
     )
   }
