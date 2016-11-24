@@ -24,6 +24,7 @@ var UserSchema = new Schema({
     tickets    : [Number]
 });
 
+
 var UserModel = mongoose.model('users', UserSchema);
 
 module.exports = UserModel

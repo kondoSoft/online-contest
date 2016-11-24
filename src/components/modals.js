@@ -57,14 +57,25 @@ export class ModalDetails extends Component{
 export class ModalAsiggn extends Component{
   constructor(props){
     super(props)
-
+    this.state = {
+      currentValue : 100
+    }
     this.submit = this.submit.bind(this)
   }
   submit(e){
     e.preventDefault()
+    var x = parseInt(this.refs.tickets.value)
+    var arrayTickets = []
+    var numInicial = this.state.currentValue + 1
+    console.log(numInicial);
+    for (var i = 1; i< x + 1; i++){
+      arrayTickets.push(numInicial++)
+    }
+    this.setState({currentValue: numInicial})
+
     request.put(`http://localhost:8080/user/${this.props.dataDetails._id}`)
     .send({
-        tickets    : this.refs.tickets.value
+        tickets    : arrayTickets
     })
     .set('Accept', 'application/json')
     .end(function(err, res){
@@ -94,7 +105,7 @@ export class ModalAsiggn extends Component{
               <p className="subtitle is-6"><strong>{this.props.dataDetails.reservation}</strong></p>
               <h4>Cantidad</h4>
               {/* Asignacion de Tickets */}
-              <input ref='tickets' id="campo" name="Boletos" type="number" min="0" max="5"/>
+              <input ref='tickets' id="campo" name="Boletos" type="number" min="1" max="5"/>
             </div>
           </section>
           <footer className="modal-card-foot ">
