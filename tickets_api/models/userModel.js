@@ -21,9 +21,8 @@ var UserSchema = new Schema({
     },
     checked    : Boolean,
     provider   : String,
-    tickets    : [Number]
+    tickets    : { type: Schema.ObjectId, ref: 'Ticket' }
 });
-
 
 var UserModel = mongoose.model('users', UserSchema);
 
